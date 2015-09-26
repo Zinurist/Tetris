@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include "colors.h"
-#include <time.h>
+#include <sys/time.h>
+#include <stdlib.h>
 
 
 void loop();

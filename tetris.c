@@ -1,5 +1,5 @@
 #include "tetris.h"
-
+#include <unistd.h>
 int main(){
 	//http://tldp.org/HOWTO/NCURSES-Programming-HOWTO/
 	initscr();
@@ -15,7 +15,7 @@ int main(){
 	init_colors();
 	
 	keypad(stdscr,1);
-	halfdelay(3);
+	halfdelay(1);
 	init_game();
 	loop();
 	endwin();
@@ -24,9 +24,20 @@ int main(){
 
 
 void loop(){
+	struct timeval *begin, *end, *tmp;
+	unsigned long diff;//in us
+	int c;
+	
+	
+	begin=malloc(sizeof(struct timeval));
+	end=malloc(sizeof(struct timeval));
+	
 	draw();
-	int c=getch();
+	c=getch();
+	gettimeofday(begin, NULL);
+	diff=0;
 	while(c!='e' && c!='q' && c!=27){//27=ESC
+		//input
 		if(c!=ERR){
 			switch(c){
 			case KEY_UP: 	;break;
@@ -36,7 +47,22 @@ void loop(){
 			default: break;
 			}
 		}
+		
+		//game tick
+		gettimeofday(end, NULL);
+		diff+=(end->tv_sec-begin->tv_sec)*1000000 + end->tv_usec-begin->tv_usec;
+		tmp=begin;
+		begin=end;
+		end=tmp;
+		
+		if(diff>=1000000){
+			diff-=1000000;
+			//tick
+		}
+		
+		//gui update
 		draw();
+		
 		c=getch();
 	}
 }
