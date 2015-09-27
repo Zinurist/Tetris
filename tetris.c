@@ -36,8 +36,6 @@ void init_game(){
 	}
 	
 	pthread_join(loop_thread, NULL);
-	//input_handler(&input_key);
-	//game_loop(&input_key);
 }
 
 void *game_loop(void * arg){
@@ -52,12 +50,13 @@ void *game_loop(void * arg){
 	diff=0;
 	
 	draw();
-	while(1){//27=ESC
+	while(1){
 		//input
 		key=*input_key;
 		if(key==-2){
 			break;
 		}else if(key!=-1){
+			*input_key=-1;//input read->reset
 			switch(key){
 			case KEY_UP: 	;break;
 			case KEY_DOWN:	;break;
@@ -65,7 +64,6 @@ void *game_loop(void * arg){
 			case KEY_RIGHT: ;break;
 			default: break;
 			}
-			key=-1;//input read->reset
 		}
 		
 		//game tick & time
@@ -92,12 +90,14 @@ void *game_loop(void * arg){
 
 void *input_handler(void * arg){
 	int * input_key = (int*)arg;
+	int key=0;
 	while(1){
-		*input_key=getch();
-		if(*input_key=='e' || *input_key=='q' || *input_key==27){
+		key=getch();
+		if(key=='e' || key=='q' || key==27){//27=ESC
 			*input_key=-2;
 			break;
 		}
+		*input_key=key;
 	}
 	
 	pthread_exit(NULL);
@@ -130,7 +130,6 @@ void draw_base(){
 }
 
 void draw_blocks(){
-	
 	
 }
 
