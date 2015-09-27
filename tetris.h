@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include "blocks.h"
 
 
 void *game_loop(void * arg);
