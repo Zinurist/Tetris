@@ -1,5 +1,5 @@
 #include "tetris.h"
-#include <unistd.h>
+
 int main(){
 	//http://tldp.org/HOWTO/NCURSES-Programming-HOWTO/
 	initscr();
@@ -15,40 +15,46 @@ int main(){
 	init_colors();
 	
 	keypad(stdscr,1);
-	halfdelay(1);
+	
 	init_game();
-	loop();
+	
 	endwin();
 	return 0;
 }
 
+void init_game(){
+	int input_key;
+	struct pthread_t loop_thread, input_thread;
+	input_handler(&input_key);
+	loop(&input_key);
+}
 
-void loop(){
+void loop(int * input_key){
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
-	int c;
-	
+	int key=-1; //for temporary storage of input_key, b/c of race conditions
 	
 	begin=malloc(sizeof(struct timeval));
 	end=malloc(sizeof(struct timeval));
-	
-	draw();
-	c=getch();
 	gettimeofday(begin, NULL);
 	diff=0;
-	while(c!='e' && c!='q' && c!=27){//27=ESC
+	
+	draw();
+	while(key!='e' && key!='q' && key!=27){//27=ESC
 		//input
-		if(c!=ERR){
-			switch(c){
+		key=*input_key;
+		if(key!=-1){
+			switch(key){
 			case KEY_UP: 	;break;
 			case KEY_DOWN:	;break;
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
 			default: break;
 			}
+			key=-1;//input read->reset
 		}
 		
-		//game tick
+		//game tick & time
 		gettimeofday(end, NULL);
 		diff+=(end->tv_sec-begin->tv_sec)*1000000 + end->tv_usec-begin->tv_usec;
 		tmp=begin;
@@ -63,10 +69,16 @@ void loop(){
 		//gui update
 		draw();
 		
-		c=getch();
+		//sleep
+		usleep(50*1000);
 	}
 }
 
+void input_handler(int * input_key){
+	while(1){
+		*input_key=getch();
+	}
+}
 
 void draw(){
 	draw_base();
@@ -120,6 +132,3 @@ void init_colors(){
 	init_pair(E_MAGENTA,-1,COLOR_MAGENTA);
 }
 
-void init_game(){
-	
-}

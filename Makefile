@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -c -Wall -std=c99
+CFLAGS= -c -Wall -std=gnu99
 LDLIBS= -lncursesw -lpthread
 SOURCES=tetris.c
 OBJECTS=$(SOURCES:.c=.o)
