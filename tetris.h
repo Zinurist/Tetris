@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 
-void loop(int * input_key);
+void game_loop(int * input_key);
 void input_handler(int * input_key);
 void draw();
 void draw_base();

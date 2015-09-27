@@ -25,11 +25,11 @@ int main(){
 void init_game(){
 	int input_key;
 	struct pthread_t loop_thread, input_thread;
-	input_handler(&input_key);
-	loop(&input_key);
+	//input_handler(&input_key);
+	game_loop(&input_key);
 }
 
-void loop(int * input_key){
+void game_loop(int * input_key){
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
 	int key=-1; //for temporary storage of input_key, b/c of race conditions
