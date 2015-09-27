@@ -3,10 +3,11 @@
 #include <sys/time.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 
 
-void game_loop(int * input_key);
-void input_handler(int * input_key);
+void *game_loop(void * arg);
+void *input_handler(void * arg);
 void draw();
 void draw_base();
 void draw_blocks();

@@ -24,12 +24,24 @@ int main(){
 
 void init_game(){
 	int input_key;
-	struct pthread_t loop_thread, input_thread;
+	pthread_t loop_thread, input_thread;
+	
+	if(pthread_create(&input_thread, NULL, input_handler, &input_key)){
+		fprintf(stderr,"ERROR when creating input handler thread");
+		return;
+	}
+	if(pthread_create(&loop_thread, NULL, game_loop, &input_key)){
+		fprintf(stderr,"ERROR when creating game loop thread");
+		return;
+	}
+	
+	pthread_join(loop_thread, NULL);
 	//input_handler(&input_key);
-	game_loop(&input_key);
+	//game_loop(&input_key);
 }
 
-void game_loop(int * input_key){
+void *game_loop(void * arg){
+	int * input_key = (int*)arg;
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
 	int key=-1; //for temporary storage of input_key, b/c of race conditions
@@ -40,10 +52,12 @@ void game_loop(int * input_key){
 	diff=0;
 	
 	draw();
-	while(key!='e' && key!='q' && key!=27){//27=ESC
+	while(1){//27=ESC
 		//input
 		key=*input_key;
-		if(key!=-1){
+		if(key==-2){
+			break;
+		}else if(key!=-1){
 			switch(key){
 			case KEY_UP: 	;break;
 			case KEY_DOWN:	;break;
@@ -72,12 +86,21 @@ void game_loop(int * input_key){
 		//sleep
 		usleep(50*1000);
 	}
+	
+	pthread_exit(NULL);
 }
 
-void input_handler(int * input_key){
+void *input_handler(void * arg){
+	int * input_key = (int*)arg;
 	while(1){
 		*input_key=getch();
+		if(*input_key=='e' || *input_key=='q' || *input_key==27){
+			*input_key=-2;
+			break;
+		}
 	}
+	
+	pthread_exit(NULL);
 }
 
 void draw(){
