@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS= -c -Wall -std=gnu99
 LDLIBS= -lncursesw -lpthread
-SOURCES=tetris.c
+SOURCES=main.c tetris.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=Tetris
 
