@@ -39,7 +39,7 @@ int init_threads(pthread_t * input_thread, pthread_t * loop_thread, int * input_
 		return -1;
 	}
 	
-	//TODO menu loop? maybe use main-thread
+	//TODO menu thread? maybe use main-thread
 	
 	return 0;
 }
