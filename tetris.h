@@ -8,9 +8,6 @@
 
 
 void *game_loop(void * arg);
-void *input_handler(void * arg);
 void draw();
 void draw_base();
 void draw_blocks();
-void init_colors();
-void init_game();
