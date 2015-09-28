@@ -7,6 +7,7 @@ int main(){
 	cbreak();
 	noecho();
 	curs_set(0);
+	keypad(stdscr,1);
 	
 	//color error messages & exit, TODO no-color mode?
 	if(!has_colors()){endwin();printf("no colors, exiting...\n");return -1;}
@@ -14,28 +15,33 @@ int main(){
 	use_default_colors();
 	init_colors();
 	
-	keypad(stdscr,1);
+	int input_key=-1;
+	pthread_t input_thread, loop_thread;
 	
-	init_game();
+	if(init_threads(&input_thread, &loop_thread, &input_key)) return -1;
+	
+	pthread_join(loop_thread, NULL);//wait for game to end
 	
 	endwin();
 	return 0;
 }
 
-void init_game(){
-	int input_key;
-	pthread_t loop_thread, input_thread;
+int init_threads(pthread_t * input_thread, pthread_t * loop_thread, int * input_key){
 	
-	if(pthread_create(&input_thread, NULL, input_handler, &input_key)){
-		fprintf(stderr,"ERROR when creating input handler thread");
-		return;
-	}
-	if(pthread_create(&loop_thread, NULL, game_loop, &input_key)){
-		fprintf(stderr,"ERROR when creating game loop thread");
-		return;
+	if(pthread_create(input_thread, NULL, input_handler, input_key)){
+		fprintf(stderr,"Error when creating input handler thread");
+		return -1;
 	}
 	
-	pthread_join(loop_thread, NULL);
+	if(pthread_create(loop_thread, NULL, game_loop, input_key)){
+		fprintf(stderr,"Error when creating game loop thread");
+		pthread_kill(*input_thread, SIGTERM);
+		return -1;
+	}
+	
+	//TODO menu loop? maybe use main-thread
+	
+	return 0;
 }
 
 void init_colors(){
