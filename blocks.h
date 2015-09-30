@@ -15,7 +15,7 @@ typedef uint32_t cell; // left 16 bit = visible?, right 16 bit = color, use macr
 
 #define VISIBLE(c) (c&0xFFFF0000)
 #define COLOR(c) (c&0x0000FFFF)
-#define MAKE_VISIBLE(c) (c|0x0001FFFF)
+#define MAKE_VISIBLE(c) (c|0x00010000)
 #define MAKE_INVISIBLE(c) (c&0x0000FFFF)//same as color for now
 
 typedef struct{

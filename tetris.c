@@ -5,7 +5,7 @@ tetromino * current_tetromino;
 
 void init_game(){
 	world = malloc(sizeof(world_data));
-	current_tetromino = create_tetromino(0,0,0);
+	current_tetromino = create_tetromino(2,1,1);
 }
 
 void game_loop(int * input_key){
@@ -90,7 +90,7 @@ void draw_world(){
 			block = world->field[x][y];
 			if( VISIBLE(block) ){
 				attrset( C(COLOR(block)) );
-				mvaddch(y, x, ' ');
+				mvprintw(BOARD_START_Y+1+y, BOARD_START_X+2+x*2, "  ");
 			}
 			
 		}
@@ -108,10 +108,10 @@ void draw_block(){
 	
 	for(int x = 0; x < TETROMINO_WIDTH; x++ ){
 		for(int y = 0; y < TETROMINO_HEIGHT; y++ ){
-			block = current_tetromino->field[x][y];
+			block = current_tetromino->field[y][x];
 			if( VISIBLE(block) ){
 				attrset( C(COLOR(block)) );
-				mvaddch(y+sy, x+sx, ' ');
+				mvprintw(BOARD_START_Y+1+y+sy, BOARD_START_X+2+(x+sx)*2, "  ");
 			}
 		}
 	}
