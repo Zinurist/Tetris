@@ -6,6 +6,7 @@ unsigned long tick_time;
 
 void init_game(){
 	world.points = 0;
+	world.lines_removed = 0;
 	world.top_line = WORLD_HEIGHT;
 	for(int x = 0; x < WORLD_WIDTH; x++){
 		for(int y = 0; y < WORLD_HEIGHT; y++){
@@ -98,7 +99,7 @@ void draw(){
 void draw_base(){
 	move(0,0);
 	attrset(C(PURE_WHITE));
-	printw("Tetris     Points: %d", world.points);
+	printw("Tetris - Points: %d, %d lines removed", world.points, world.lines_removed);
 	
 	attrset(C(E_WHITE));
 	move(BOARD_START_Y,BOARD_START_X);
@@ -229,4 +230,5 @@ void remove_line(int start_line){
 	}
 	
 	world.top_line--;
+	world.lines_removed++;
 }

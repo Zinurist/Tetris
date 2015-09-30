@@ -22,4 +22,4 @@ void draw_block();
 void tick(int * reached_bottom);
 int check_line(int line);
 void fill_line(int line);
-void remove_line(int line);
+void remove_line(int start_line);

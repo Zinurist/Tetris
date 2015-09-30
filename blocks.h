@@ -19,7 +19,7 @@ typedef uint32_t cell; // left 16 bit = visible?, right 16 bit = color, use macr
 #define MAKE_INVISIBLE(c) (c&0x0000FFFF)//same as color for now
 
 typedef struct{
-	int points, top_line;
+	int points, top_line, lines_removed;
 	cell field[WORLD_WIDTH][WORLD_HEIGHT];
 } world_data;
 
