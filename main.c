@@ -1,6 +1,8 @@
 #include "main.h"
 
 int main(){
+	srand(time(NULL));
+	
 	//http://tldp.org/HOWTO/NCURSES-Programming-HOWTO/
 	initscr();
 	clear();

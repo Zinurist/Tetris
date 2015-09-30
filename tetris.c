@@ -10,7 +10,7 @@ void init_game(){
 			world.field[x][y] = MAKE_INVISIBLE(0);
 		}
 	}
-	fill_tetromino(&current_tetromino,0,0,0);
+	fill_tetromino(&current_tetromino,rand()%7,0,0);
 }
 
 void game_loop(int * input_key){
