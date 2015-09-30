@@ -4,7 +4,7 @@ world * w;
 tetromino * current_tetromino;
 
 void init_game(){
-	w =malloc(sizeof(world));
+	w = malloc(sizeof(world));
 	current_tetromino = create_tetromino(0,0,0);
 }
 
@@ -15,20 +15,20 @@ void game_loop(int * input_key){
 	//control data
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
-	int key=27; //for temporary storage of input_key, b/c of race conditions
+	int key = 27; //for temporary storage of input_key, b/c of race conditions
 				//initialized with 27 to go to menu immediately
 	
 	begin=malloc(sizeof(struct timeval));
 	end=malloc(sizeof(struct timeval));
 	gettimeofday(begin, NULL);
-	diff=0;
+	diff = 0;
 	
 	draw();
 	while(1){
 		//input
 		key=*input_key;
-		if(key!=-1){
-			*input_key=-1;//input read->reset
+		if(key != -1){
+			*input_key = -1;//input read->reset
 			switch(key){//TODO move block
 			case KEY_UP: 	;break;//do nothin
 			case KEY_DOWN:	;break;
@@ -47,8 +47,8 @@ void game_loop(int * input_key){
 		begin=end;
 		end=tmp;
 		
-		if(diff>=1000000){
-			diff-=1000000;
+		if(diff >= 1000000){
+			diff -= 1000000;
 			tick(current_tetromino, w);
 		}
 		
@@ -77,7 +77,7 @@ void draw_base(){
 	printw("                     ");
 	move(20,2);
 	printw("                     ");
-	for(int i=3; i<20; i++){
+	for(int i = 3; i < 20; i++){
 		mvaddch(i,2,' ');
 		mvaddch(i,22,' ');
 	}
