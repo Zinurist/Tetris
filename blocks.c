@@ -48,7 +48,7 @@ void fill_tetromino(tetromino * t, int type){
 			break;
 		default: //= case 6 and any other number, "error handling"
 			field = t_T;
-			t->x = WORLD_WIDTH/2;
+			t->x = WORLD_WIDTH/2-2;
 			break;
 	}
 	
