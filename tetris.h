@@ -19,4 +19,4 @@ void draw();
 void draw_world();
 void draw_base();
 void draw_block();
-void tick();
+void tick(int * reached_bottom);

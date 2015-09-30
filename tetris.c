@@ -21,6 +21,7 @@ void game_loop(int * input_key){
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
 	int key = 0; //for temporary storage of input_key, b/c of race conditions
+	int reached_bottom = 0;
 	
 	begin=malloc(sizeof(struct timeval));
 	end=malloc(sizeof(struct timeval));
@@ -35,9 +36,9 @@ void game_loop(int * input_key){
 			*input_key = -1;//input read->reset
 			switch(key){//TODO move block
 			case KEY_UP: 	time_to_dance(5);break;//do nothin
-			case KEY_DOWN:	;break;
-			case KEY_LEFT: 	;break;
-			case KEY_RIGHT: ;break;
+			case KEY_DOWN:	reached_bottom = go_down(&current_tetromino, &world);break;
+			case KEY_LEFT: 	go_left(&current_tetromino, &world);break;
+			case KEY_RIGHT: go_right(&current_tetromino, &world);break;
 			case 27: 		menu(input_key); break;
 			case -2: 		free(begin);free(end);return;
 			default: break;
@@ -53,7 +54,7 @@ void game_loop(int * input_key){
 		
 		if(diff >= 1000000){
 			diff -= 1000000;
-			tick();
+			tick(&reached_bottom);
 		}
 		
 		//gui update
@@ -123,8 +124,12 @@ void draw_block(){
 }
 
 
-void tick(){
-	//TODO fall down (and add tetromino to world if at bottom)
-	//TODO check for rows
-	//TODO create new tetromino
+void tick(int * reached_bottom){
+	
+	if(*reached_bottom){
+		
+	}else{
+		*reached_bottom = go_down(&current_tetromino, &world);//in the next tick: block is placed
+	}
+	
 }
