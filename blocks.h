@@ -22,6 +22,6 @@ typedef struct{
 } tetromino;
 
 
-int go_down(tetromino * t);
-int go_left(tetromino * t);
-int go_right(tetromino * t);
+int go_down(tetromino * t, world * w);
+int go_left(tetromino * t, world * w);
+int go_right(tetromino * t, world * w);
