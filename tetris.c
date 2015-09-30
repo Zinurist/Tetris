@@ -39,7 +39,11 @@ void game_loop(int * input_key){
 			case KEY_DOWN:	reached_bottom = go_down(&current_tetromino, &world);break;
 			case KEY_LEFT: 	go_left(&current_tetromino, &world);break;
 			case KEY_RIGHT: go_right(&current_tetromino, &world);break;
-			case 27: 		menu(input_key); break;
+			case 27: /*ESC*/menu(input_key); break;
+			case 32: /*Space*/
+				while(!go_down(&current_tetromino, &world));
+				reached_bottom=1;
+				break;
 			case -2: 		free(begin);free(end);return;
 			default: break;
 			}
