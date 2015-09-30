@@ -15,8 +15,7 @@ void game_loop(int * input_key){
 	//control data
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
-	int key = 27; //for temporary storage of input_key, b/c of race conditions
-				//initialized with 27 to go to menu immediately
+	int key = 0; //for temporary storage of input_key, b/c of race conditions
 	
 	begin=malloc(sizeof(struct timeval));
 	end=malloc(sizeof(struct timeval));
