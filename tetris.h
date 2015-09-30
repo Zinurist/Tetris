@@ -10,9 +10,12 @@
 #include "menu.h"
 #include "spooky.h"
 
+#define BOARD_START_X 4
+#define BOARD_START_Y 2
 
 void game_loop(int * input_key);
 void draw();
+void draw_world();
 void draw_base();
-void draw_blocks();
+void draw_block();
 void tick(tetromino * t, world* w);

@@ -60,33 +60,61 @@ void game_loop(int * input_key){
 }
 
 void draw(){
+	clear();
 	draw_base();
-	draw_blocks();
+	draw_world();
+	draw_block();
 	refresh();
 }
 
 void draw_base(){
-	clear();
 	move(0,0);
 	attrset(C(WHITE));
 	printw("Tetris");
 	
 	attrset(C(E_WHITE));
-	move(2,2);
-	printw("                     ");
-	move(20,2);
-	printw("                     ");
-	for(int i = 3; i < 20; i++){
-		mvaddch(i,2,' ');
-		mvaddch(i,22,' ');
+	move(BOARD_START_Y,BOARD_START_X);
+	printw("                        ");//(WORLD_WIDTH+2)*2 spaces, +2 because of border, *2 because of double block size
+	move(1+BOARD_START_Y+WORLD_HEIGHT,BOARD_START_X);
+	printw("                        ");
+	for(int i = BOARD_START_Y+1; i < WORLD_HEIGHT+BOARD_START_Y+1; i++){
+		mvprintw(i,BOARD_START_X,"  ");
+		mvprintw(i, WORLD_WIDTH*2 + BOARD_START_X+2,"  ");
 	}
-	
-	
-	attrset(C(WHITE));
 }
 
-void draw_blocks(){
+void draw_world(){
+	int block;
+	for(int x = 0; x < WORLD_WIDTH; x++){
+		for(int y = 0; y < WORLD_HEIGHT; y++){
+			block = w->field[x][y];
+			if( VISIBLE(block) ){
+				attrset( C(COLOR(block)) );
+				mvaddch(y, x, ' ');
+			}
+			
+		}
+		
+	}
+}
+
+void draw_block(){
+	//startx/y
+	int sx = current_tetromino->x;
+	int sy = current_tetromino->y;
+	int block;
 	
+	move(sy,sx);
+	
+	for(int x = 0; x < TETROMINO_WIDTH; x++ ){
+		for(int y = 0; y < TETROMINO_HEIGHT; y++ ){
+			block = current_tetromino->field[x][y];
+			if( VISIBLE(block) ){
+				attrset( C(COLOR(block)) );
+				mvaddch(y+sy, x+sx, ' ');
+			}
+		}
+	}
 }
 
 
