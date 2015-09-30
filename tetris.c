@@ -5,7 +5,7 @@ tetromino * current_tetromino;
 
 void init_game(){
 	world = malloc(sizeof(world_data));
-	current_tetromino = create_tetromino(2,1,1);
+	current_tetromino = create_tetromino(5,1,1);
 }
 
 void game_loop(int * input_key){
@@ -69,7 +69,7 @@ void draw(){
 
 void draw_base(){
 	move(0,0);
-	attrset(C(WHITE));
+	attrset(C(PURE_WHITE));
 	printw("Tetris");
 	
 	attrset(C(E_WHITE));

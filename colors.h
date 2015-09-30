@@ -1,5 +1,6 @@
  #pragma once
  
+ #define PURE_WHITE 0
  #define WHITE 2
  #define BLACK 3
  #define RED 4
