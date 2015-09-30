@@ -17,32 +17,38 @@ int go_right(tetromino * t, world_data * w){
 }
 
 
-void fill_tetromino(tetromino * t, int type, int x, int y){
-	t->x = x;
-	t->y = y;
+void fill_tetromino(tetromino * t, int type){
+	t->y = 0;
 	
 	const cell (*field)[TETROMINO_HEIGHT];
 	switch(type){
 		case 0:
 			field = t_L;
+			t->x = WORLD_WIDTH/2-1;
 			break;
 		case 1:
 			field = t_J;
+			t->x = WORLD_WIDTH/2-1;
 			break;
 		case 2:
 			field = t_Z;
+			t->x = WORLD_WIDTH/2-1;
 			break;
 		case 3:
 			field = t_S;
+			t->x = WORLD_WIDTH/2-1;
 			break;
 		case 4:
 			field = t_I;
+			t->x = WORLD_WIDTH/2-1;
 			break;
 		case 5:
 			field = t_O;
+			t->x = WORLD_WIDTH/2-1;
 			break;
 		default: //= case 6 and any other number, "error handling"
 			field = t_T;
+			t->x = WORLD_WIDTH/2;
 			break;
 	}
 	
