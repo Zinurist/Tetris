@@ -13,6 +13,7 @@ typedef uint32_t cell; // left 16 bit = visible?, right 16 bit = color, use macr
 #define COLOR(c) (c&0x0000FFFF)
 
 typedef struct{
+	int points;
 	cell field[width][height];
 } world;
 
