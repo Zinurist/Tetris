@@ -55,8 +55,8 @@ void game_loop(int * input_key){
 		begin=end;
 		end=tmp;
 		
-		if(diff >= 1000000){
-			diff -= 1000000;
+		if(diff >= 700000){
+			diff -= 700000;
 			tick(&reached_bottom);
 		}
 		
