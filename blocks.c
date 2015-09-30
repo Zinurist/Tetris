@@ -23,28 +23,28 @@ tetromino * create_tetromino(int type, int x, int y){
 	new_t->x=x;
 	new_t->y=y;
 	
-	cell **field;
+	const cell (*field)[TETROMINO_HEIGHT];
 	switch(type){
 		case 0:
-			field=(cell**)t_L;
+			field=t_L;
 			break;
 		case 1:
-			field=(cell**)t_J;
+			field=t_J;
 			break;
 		case 2:
-			field=(cell**)t_Z;
+			field=t_Z;
 			break;
 		case 3:
-			field=(cell**)t_S;
+			field=t_S;
 			break;
 		case 4:
-			field=(cell**)t_I;
+			field=t_I;
 			break;
 		case 5:
-			field=(cell**)t_O;
+			field=t_O;
 			break;
 		default: //= case 6 and any other number, "error handling"
-			field=(cell**)t_T;
+			field=t_T;
 			break;
 	}
 	
