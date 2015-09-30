@@ -1,11 +1,15 @@
 #include "colors.h"
 #include <stdint.h>
 
+#define NUM_OF_TYPES 7//tetromino types
+
 #define block 1
 #define air 0
 
-#define width 10
-#define height 22 
+#define WORLD_WIDTH 10
+#define WORLD_HEIGHT 22 
+#define TETROMINO_WIDTH 4
+#define TETROMINO_HEIGHT 4
 
 typedef uint32_t cell; // left 16 bit = visible?, right 16 bit = color, use macros below
 
@@ -16,12 +20,12 @@ typedef uint32_t cell; // left 16 bit = visible?, right 16 bit = color, use macr
 
 typedef struct{
 	int points;
-	cell field[width][height];
+	cell field[WORLD_WIDTH][WORLD_HEIGHT];
 } world;
 
 typedef struct{
-	cell field[4][4];
 	int x,y;
+	cell field[TETROMINO_WIDTH][TETROMINO_HEIGHT];
 } tetromino;
 
 
@@ -30,9 +34,59 @@ int go_down(tetromino * t, world * w);
 int go_left(tetromino * t, world * w);
 int go_right(tetromino * t, world * w);
 
+//type range: 0-6 (7 tetrominos)
 tetromino * create_tetromino(int type, int x, int y);
 
 
 //FIELDS for tetrominos
+//static: dont tell linker, use only here
+//extern: tell linker for others to use, define array in .c file!
 
-static const cell t1[4][4] = {{1,1,1,1},{1,1,1,1},{1,1,1,1},{1,1,1,1}};
+static const cell t_L[TETROMINO_WIDTH][TETROMINO_HEIGHT] = {
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)}
+};
+
+static const cell t_J[TETROMINO_WIDTH][TETROMINO_HEIGHT] = {
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)}
+};
+
+static const cell t_Z[TETROMINO_WIDTH][TETROMINO_HEIGHT] = {
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)}
+};
+
+static const cell t_S[TETROMINO_WIDTH][TETROMINO_HEIGHT] = {
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)}
+};
+
+static const cell t_I[TETROMINO_WIDTH][TETROMINO_HEIGHT] = {
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)}
+};
+
+static const cell t_O[TETROMINO_WIDTH][TETROMINO_HEIGHT] = {
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)}
+};
+
+static const cell t_T[TETROMINO_WIDTH][TETROMINO_HEIGHT] = {
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)},
+{MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1),	MAKE_VISIBLE(1)}
+};
