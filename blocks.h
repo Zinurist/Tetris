@@ -24,7 +24,7 @@ typedef struct{
 } world_data;
 
 typedef struct{
-	int x,y;
+	int x,y,width,height;
 	cell field[TETROMINO_WIDTH][TETROMINO_HEIGHT];
 } tetromino;
 

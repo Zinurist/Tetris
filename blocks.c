@@ -3,8 +3,8 @@
 
 int go_down(tetromino * t, world_data * w){
 	t->y++;
-	if(check_collision(t,w)){
-		t->x--;
+	if(t->y+t->height > WORLD_HEIGHT || check_collision(t,w)){//TODO do not use y, but lowest block in tetromino
+		t->y--;
 		return 1;
 	}
 	return 0;
@@ -12,7 +12,7 @@ int go_down(tetromino * t, world_data * w){
 
 int go_left(tetromino * t, world_data * w){
 	t->x--;
-	if(check_collision(t,w)){
+	if(t->x < 0 || check_collision(t,w)){//using x is ok, unless tetros arent aligned to the left side!!
 		t->x++;
 		return 1;
 	}
@@ -21,7 +21,7 @@ int go_left(tetromino * t, world_data * w){
 
 int go_right(tetromino * t, world_data * w){
 	t->x++;
-	if(check_collision(t,w)){
+	if(t->x+t->width > WORLD_WIDTH || check_collision(t,w)){//TODO do not use x, but most right block in tetromino
 		t->x--;
 		return 1;
 	}
@@ -72,30 +72,44 @@ void fill_tetromino(tetromino * t, int type){
 		case 0:
 			field = t_L;
 			t->x = WORLD_WIDTH/2-2;
+			t->width = 3;
+			t->height = 2;
 			break;
 		case 1:
 			field = t_J;
 			t->x = WORLD_WIDTH/2-2;
+			t->width = 3;
+			t->height = 2;
 			break;
 		case 2:
 			field = t_Z;
 			t->x = WORLD_WIDTH/2-2;
+			t->width = 3;
+			t->height = 2;
 			break;
 		case 3:
 			field = t_S;
 			t->x = WORLD_WIDTH/2-2;
+			t->width = 3;
+			t->height = 2;
 			break;
 		case 4:
 			field = t_I;
 			t->x = WORLD_WIDTH/2-1;
+			t->width = 1;
+			t->height = 4;
 			break;
 		case 5:
 			field = t_O;
 			t->x = WORLD_WIDTH/2-1;
+			t->width = 2;
+			t->height = 2;
 			break;
 		default: //= case 6 and any other number, "error handling"
 			field = t_T;
 			t->x = WORLD_WIDTH/2-2;
+			t->width = 3;
+			t->height = 2;
 			break;
 	}
 	
