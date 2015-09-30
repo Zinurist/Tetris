@@ -5,7 +5,7 @@ tetromino * current_tetromino;
 
 void init_game(){
 	world = malloc(sizeof(world_data));
-	current_tetromino = create_tetromino(5,1,1);
+	current_tetromino = create_tetromino(2,1,1);
 }
 
 void game_loop(int * input_key){
