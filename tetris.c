@@ -2,6 +2,7 @@
 
 world_data world;
 tetromino current_tetromino;
+unsigned long tick_time;
 
 void init_game(){
 	world.points = 0;
@@ -11,6 +12,7 @@ void init_game(){
 		}
 	}
 	fill_tetromino(&current_tetromino,rand()%7);
+	tick_time = 700000;
 }
 
 void game_loop(int * input_key){
@@ -39,10 +41,14 @@ void game_loop(int * input_key){
 				reached_bottom = go_down(&current_tetromino, &world);
 				break;
 			case KEY_LEFT: 	
-				go_left(&current_tetromino, &world);
+				if(!reached_bottom){
+					go_left(&current_tetromino, &world);
+				}
 				break;
 			case KEY_RIGHT: 
-				go_right(&current_tetromino, &world);
+				if(!reached_bottom){
+					go_right(&current_tetromino, &world);
+				}
 				break;
 			case 27: /*ESC*/
 				menu(input_key); 
@@ -50,6 +56,7 @@ void game_loop(int * input_key){
 			case 32: /*Space*/
 				while(!go_down(&current_tetromino, &world));
 				reached_bottom=1;
+				diff=tick_time;
 				break;
 			case -2: 		
 				free(begin);
@@ -66,8 +73,8 @@ void game_loop(int * input_key){
 		begin=end;
 		end=tmp;
 		
-		if(diff >= 700000){
-			diff -= 700000;
+		if(diff >= tick_time){
+			diff -= tick_time;
 			tick(&reached_bottom);
 		}
 		
