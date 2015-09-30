@@ -10,7 +10,8 @@ void *game_loop(void * arg){
 	int * input_key = (int*)arg;
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
-	int key=-1; //for temporary storage of input_key, b/c of race conditions
+	int key=27; //for temporary storage of input_key, b/c of race conditions
+				//initialized with 27 to go to menu immediately
 	
 	begin=malloc(sizeof(struct timeval));
 	end=malloc(sizeof(struct timeval));
@@ -23,6 +24,8 @@ void *game_loop(void * arg){
 		key=*input_key;
 		if(key==-2){
 			break;
+		}else if(key==27){
+			menu();
 		}else if(key!=-1){
 			*input_key=-1;//input read->reset
 			switch(key){//TODO move block
