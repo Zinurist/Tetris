@@ -15,7 +15,7 @@ int main(){
 	use_default_colors();
 	init_colors();
 	
-	int input_key = 27;
+	int input_key = -1;//TODO change to 27
 	pthread_t input_thread;
 	
 	if(pthread_create(&input_thread, NULL, input_handler, &input_key)){

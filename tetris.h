@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include "blocks.h"
 #include "menu.h"
+#include "spooky.h"
 
 
 void game_loop(int * input_key);

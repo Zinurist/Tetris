@@ -30,7 +30,7 @@ void game_loop(int * input_key){
 		if(key != -1){
 			*input_key = -1;//input read->reset
 			switch(key){//TODO move block
-			case KEY_UP: 	;break;//do nothin
+			case KEY_UP: 	time_to_dance(5);break;//do nothin
 			case KEY_DOWN:	;break;
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
