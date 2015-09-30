@@ -3,16 +3,25 @@
 #define block 1
 #define air 0
 
-struct world{
-	int width, height;
-	struct tetromino ** tets;
-};
+#define width 10
+#define height 22 
 
-struct tetromino{
+typedef struct{
+	int color;
+	char visible;	
+} cell;
+
+typedef struct{
+	cell field[width][height];
+} world;
+
+typedef struct{
 	char field[4][4];
 	int color;
 	int x,y;
-	void (*go_left)(struct world * w);
-	void (*go_right)(struct world * w);
-	void (*go_down)(struct world * w);
-};
+} tetromino;
+
+
+int go_down(tetromino * t);
+int go_left(tetromino * t);
+int go_right(tetromino * t);
