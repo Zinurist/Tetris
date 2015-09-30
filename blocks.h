@@ -34,6 +34,10 @@ int go_down(tetromino * t, world_data * w);
 int go_left(tetromino * t, world_data * w);
 int go_right(tetromino * t, world_data * w);
 
+int check_collision(tetromino * t, world_data * w);
+
+void write_to_world(tetromino * t, world_data * w);
+
 //type range: 0-6 (7 tetrominos)
 void fill_tetromino(tetromino * t, int type);
 

@@ -2,18 +2,40 @@
 
 
 int go_down(tetromino * t, world_data * w){
-	
+	t->y++;
+	if(check_collision(t,w)){
+		t->x--;
+		return 1;
+	}
 	return 0;
 }
 
 int go_left(tetromino * t, world_data * w){
-	
+	t->x--;
+	if(check_collision(t,w)){
+		t->x++;
+		return 1;
+	}
 	return 0;
 }
 
 int go_right(tetromino * t, world_data * w){
-	
+	t->x++;
+	if(check_collision(t,w)){
+		t->x--;
+		return 1;
+	}
 	return 0;
+}
+
+
+int check_collision(tetromino * t, world_data * w){
+	
+}
+
+
+void write_to_world(tetromino * t, world_data * w){
+	
 }
 
 

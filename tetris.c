@@ -127,7 +127,11 @@ void draw_block(){
 void tick(int * reached_bottom){
 	
 	if(*reached_bottom){
+		write_to_world(&current_tetromino, &world);
 		
+		//TODO check for lines right here
+		
+		fill_tetromino(&current_tetromino,rand()%7);
 	}else{
 		*reached_bottom = go_down(&current_tetromino, &world);//in the next tick: block is placed
 	}
