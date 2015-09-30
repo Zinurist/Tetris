@@ -1,3 +1,5 @@
+ #pragma once
+ 
  #define WHITE 2
  #define BLACK 3
  #define RED 4

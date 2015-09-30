@@ -1,3 +1,5 @@
+#pragma once
+
 #include "colors.h"
 #include <stdint.h>
 #include <stdlib.h>
