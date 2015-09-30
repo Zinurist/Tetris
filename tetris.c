@@ -112,8 +112,8 @@ void draw_block(){
 	
 	move(sy,sx);
 	
-	for(int x = 0; x < TETROMINO_WIDTH; x++ ){
-		for(int y = 0; y < TETROMINO_HEIGHT; y++ ){
+	for(int x = 0; x < current_tetromino.width; x++ ){
+		for(int y = 0; y < current_tetromino.height; y++ ){
 			block = current_tetromino.field[y][x];
 			if( VISIBLE(block) ){
 				attrset( C(COLOR(block)) );

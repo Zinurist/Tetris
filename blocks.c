@@ -33,8 +33,8 @@ int check_collision(tetromino * t, world_data * w){
 	int block_t, block_w;
 	int sx = t->x;
 	int sy = t->y;
-	for(int x = 0; x < TETROMINO_WIDTH; x++ ){
-		for(int y = 0; y < TETROMINO_HEIGHT; y++ ){
+	for(int x = 0; x < t->width; x++ ){
+		for(int y = 0; y < t->height; y++ ){
 			block_t = t->field[y][x];
 			block_w = w->field[x+sx][y+sy];
 			
@@ -52,8 +52,8 @@ void write_to_world(tetromino * t, world_data * w){
 	int block_t;
 	int sx = t->x;
 	int sy = t->y;
-	for(int x = 0; x < TETROMINO_WIDTH; x++ ){
-		for(int y = 0; y < TETROMINO_HEIGHT; y++ ){
+	for(int x = 0; x < t->width; x++ ){
+		for(int y = 0; y < t->height; y++ ){
 			block_t = t->field[y][x];
 			
 			if( VISIBLE(block_t) ){
