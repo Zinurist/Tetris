@@ -17,11 +17,9 @@ int go_right(tetromino * t, world_data * w){
 }
 
 
-tetromino * create_tetromino(int type, int x, int y){
-	tetromino * new_t = malloc(sizeof(tetromino));
-	
-	new_t->x = x;
-	new_t->y = y;
+void fill_tetromino(tetromino * t, int type, int x, int y){
+	t->x = x;
+	t->y = y;
 	
 	const cell (*field)[TETROMINO_HEIGHT];
 	switch(type){
@@ -50,11 +48,9 @@ tetromino * create_tetromino(int type, int x, int y){
 	
 	for(int i = 0; i < TETROMINO_WIDTH; i++){
 		for(int k = 0; k < TETROMINO_HEIGHT; k++){
-			new_t->field[i][k] = field[i][k];
+			t->field[i][k] = field[i][k];
 		}
 	}
-	
-	return new_t;
 }
 
 

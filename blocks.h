@@ -35,7 +35,7 @@ int go_left(tetromino * t, world_data * w);
 int go_right(tetromino * t, world_data * w);
 
 //type range: 0-6 (7 tetrominos)
-tetromino * create_tetromino(int type, int x, int y);
+void fill_tetromino(tetromino * t, int type, int x, int y);
 
 
 //FIELDS for tetrominos

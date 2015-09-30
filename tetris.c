@@ -1,11 +1,13 @@
 #include "tetris.h"
 
-world_data * world;
-tetromino * current_tetromino;
+world_data world;
+tetromino current_tetromino;
 
 void init_game(){
-	world = malloc(sizeof(world_data));
-	current_tetromino = create_tetromino(2,1,1);
+	for(int x = 0; x < WORLD_WIDTH; x++){
+		
+	}
+	fill_tetromino(&current_tetromino,0,0,0);
 }
 
 void game_loop(int * input_key){
@@ -34,7 +36,7 @@ void game_loop(int * input_key){
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
 			case 27: 		menu(input_key); break;
-			case -2: 		free(begin);free(end);free(world);free(current_tetromino);return;
+			case -2: 		free(begin);free(end);free(world);return;
 			default: break;
 			}
 		}
@@ -100,15 +102,15 @@ void draw_world(){
 
 void draw_block(){
 	//startx/y
-	int sx = current_tetromino->x;
-	int sy = current_tetromino->y;
+	int sx = current_tetromino.x;
+	int sy = current_tetromino.y;
 	int block;
 	
 	move(sy,sx);
 	
 	for(int x = 0; x < TETROMINO_WIDTH; x++ ){
 		for(int y = 0; y < TETROMINO_HEIGHT; y++ ){
-			block = current_tetromino->field[y][x];
+			block = current_tetromino.field[y][x];
 			if( VISIBLE(block) ){
 				attrset( C(COLOR(block)) );
 				mvprintw(BOARD_START_Y+1+y+sy, BOARD_START_X+2+(x+sx)*2, "  ");
