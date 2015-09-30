@@ -34,7 +34,7 @@ void game_loop(int * input_key){
 			case KEY_DOWN:	;break;
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
-			case 27: menu(); break;
+			case 27: menu(&input_key); break;
 			case -2: return;
 			default: break;
 			}
