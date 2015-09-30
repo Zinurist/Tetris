@@ -1,5 +1,9 @@
 #include "menu.h"
 
+char* options[] = {
+	"Play", "New Game", "Settings", "Exit", "spooky dont click"
+};
+
 void menu(int * input_key){
 	int selection = 0;
 	int key = -1;

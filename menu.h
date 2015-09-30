@@ -9,6 +9,4 @@ void menu(int * input_key);
 void activate_selection();
 void draw_menu();
 
-char* options[] = {
-	"Play", "New Game", "Settings", "Exit", "spooky dont click"
-};
+//extern char* options[]; 
