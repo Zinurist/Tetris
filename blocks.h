@@ -21,7 +21,7 @@ typedef uint32_t cell; // left 16 bit = visible?, right 16 bit = color, use macr
 typedef struct{
 	int points;
 	cell field[WORLD_WIDTH][WORLD_HEIGHT];
-} world;
+} world_data;
 
 typedef struct{
 	int x,y;
@@ -30,9 +30,9 @@ typedef struct{
 
 
 
-int go_down(tetromino * t, world * w);
-int go_left(tetromino * t, world * w);
-int go_right(tetromino * t, world * w);
+int go_down(tetromino * t, world_data * w);
+int go_left(tetromino * t, world_data * w);
+int go_right(tetromino * t, world_data * w);
 
 //type range: 0-6 (7 tetrominos)
 tetromino * create_tetromino(int type, int x, int y);

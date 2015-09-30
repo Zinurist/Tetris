@@ -18,4 +18,4 @@ void draw();
 void draw_world();
 void draw_base();
 void draw_block();
-void tick(tetromino * t, world* w);
+void tick();

@@ -1,10 +1,10 @@
 #include "tetris.h"
 
-world * w;
+world_data * world;
 tetromino * current_tetromino;
 
 void init_game(){
-	w = malloc(sizeof(world));
+	world = malloc(sizeof(world_data));
 	current_tetromino = create_tetromino(0,0,0);
 }
 
@@ -33,8 +33,8 @@ void game_loop(int * input_key){
 			case KEY_DOWN:	;break;
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
-			case 27: menu(input_key); break;
-			case -2: return;
+			case 27: 		menu(input_key); break;
+			case -2: 		return;
 			default: break;
 			}
 		}
@@ -48,7 +48,7 @@ void game_loop(int * input_key){
 		
 		if(diff >= 1000000){
 			diff -= 1000000;
-			tick(current_tetromino, w);
+			tick();
 		}
 		
 		//gui update
@@ -87,7 +87,7 @@ void draw_world(){
 	int block;
 	for(int x = 0; x < WORLD_WIDTH; x++){
 		for(int y = 0; y < WORLD_HEIGHT; y++){
-			block = w->field[x][y];
+			block = world->field[x][y];
 			if( VISIBLE(block) ){
 				attrset( C(COLOR(block)) );
 				mvaddch(y, x, ' ');
@@ -118,7 +118,7 @@ void draw_block(){
 }
 
 
-void tick(tetromino * t, world* w){
+void tick(){
 	//TODO fall down (and add tetromino to world if at bottom)
 	//TODO check for rows
 	//TODO create new tetromino
