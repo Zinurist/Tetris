@@ -97,7 +97,7 @@ void draw(){
 void draw_base(){
 	move(0,0);
 	attrset(C(PURE_WHITE));
-	printw("Tetris");
+	printw("Tetris     Points: %d", world.points);
 	
 	attrset(C(E_WHITE));
 	move(BOARD_START_Y,BOARD_START_X);
