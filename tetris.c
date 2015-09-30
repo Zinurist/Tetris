@@ -190,7 +190,7 @@ void tick(int * reached_bottom){
 		for(int i = counter-1; i >= 0; i--){
 			remove_line(filled_lines[i]);
 		}
-		
+		set_tick_time();
 		*reached_bottom = 1;
 	}else{
 		//just a normal turn, m8
@@ -231,4 +231,17 @@ void remove_line(int start_line){
 	
 	world.top_line--;
 	world.lines_removed++;
+}
+
+void set_tick_time(){
+	if(world.lines_removed >= 100){
+		tick_time = 50000;
+	}else if(world.lines_removed >= 50){
+		tick_time = 100000;
+	}else if(world.lines_removed >= 25){
+		tick_time = 400000;
+	}else if(world.lines_removed >= 10){
+		tick_time = 600000;
+	}
+	
 }
