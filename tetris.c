@@ -4,7 +4,7 @@
 void *game_loop(void * arg){
 	//game data
 	world * w =malloc(sizeof(world));
-	tetromino * current_tetromino = create_tetromino(0,0,0);
+	tetromino * current_tetromino = NULL;
 	
 	//control data
 	int * input_key = (int*)arg;

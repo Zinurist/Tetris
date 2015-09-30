@@ -23,32 +23,36 @@ tetromino * create_tetromino(int type, int x, int y){
 	new_t->x=x;
 	new_t->y=y;
 	
-	const cell * field;
+	cell **field;
 	switch(type){
 		case 0:
-			field=t_L;
+			field=(cell**)t_L;
 			break;
 		case 1:
-			field=t_J;
+			field=(cell**)t_J;
 			break;
 		case 2:
-			field=t_Z;
+			field=(cell**)t_Z;
 			break;
 		case 3:
-			field=t_S;
+			field=(cell**)t_S;
 			break;
 		case 4:
-			field=t_I;
+			field=(cell**)t_I;
 			break;
 		case 5:
-			field=t_O;
+			field=(cell**)t_O;
 			break;
 		default: //= case 6 and any other number, "error handling"
-			field=t_T;
+			field=(cell**)t_T;
 			break;
 	}
 	
-	memcpy(new_t->field, field, sizeof(cell)*TETROMINO_WIDTH*TETROMINO_HEIGHT );
+	for(int i=0; i<TETROMINO_WIDTH; i++){
+		for(int k=0; k<TETROMINO_HEIGHT; k++){
+			new_t->field[i][k]=field[i][k];
+		}
+	}
 	
 	return new_t;
 }

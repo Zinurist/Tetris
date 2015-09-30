@@ -1,5 +1,6 @@
 #include "colors.h"
 #include <stdint.h>
+#include <stdlib.h>
 
 #define NUM_OF_TYPES 7//tetromino types
 
