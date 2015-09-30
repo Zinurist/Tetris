@@ -11,3 +11,4 @@ void *game_loop(void * arg);
 void draw();
 void draw_base();
 void draw_blocks();
+void tick(tetromino * t, world* w);

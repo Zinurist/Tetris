@@ -2,6 +2,11 @@
 
 
 void *game_loop(void * arg){
+	//game data
+	world w;
+	tetromino current_tetromino;
+	
+	//control data
 	int * input_key = (int*)arg;
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
@@ -20,8 +25,8 @@ void *game_loop(void * arg){
 			break;
 		}else if(key!=-1){
 			*input_key=-1;//input read->reset
-			switch(key){
-			case KEY_UP: 	;break;
+			switch(key){//TODO move block
+			case KEY_UP: 	;break;//do nothin
 			case KEY_DOWN:	;break;
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
@@ -38,7 +43,7 @@ void *game_loop(void * arg){
 		
 		if(diff>=1000000){
 			diff-=1000000;
-			//tick
+			tick(&current_tetromino, &w);
 		}
 		
 		//gui update
@@ -81,3 +86,8 @@ void draw_blocks(){
 	
 }
 
+
+void tick(tetromino * t, world* w){
+	
+	
+}
