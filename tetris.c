@@ -117,7 +117,7 @@ void draw_block(){
 	
 	for(int x = 0; x < current_tetromino.width; x++ ){
 		for(int y = 0; y < current_tetromino.height; y++ ){
-			block = current_tetromino.field[y][x];
+			block = current_tetromino.field[x][y];
 			if( VISIBLE(block) ){
 				attrset( C(COLOR(block)) );
 				mvprintw(BOARD_START_Y+1+y+sy, BOARD_START_X+2+(x+sx)*2, "  ");
