@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "blocks.h"
+#include "menu.h"
 
 
 void game_loop(int * input_key);

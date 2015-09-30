@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include "colors.h"
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
