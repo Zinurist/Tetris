@@ -3,8 +3,8 @@
 
 void *game_loop(void * arg){
 	//game data
-	world w;
-	tetromino current_tetromino;
+	world * w =malloc(sizeof(world));
+	tetromino * current_tetromino = create_tetromino(0,0,0);
 	
 	//control data
 	int * input_key = (int*)arg;
@@ -43,7 +43,7 @@ void *game_loop(void * arg){
 		
 		if(diff>=1000000){
 			diff-=1000000;
-			tick(&current_tetromino, &w);
+			tick(current_tetromino, w);
 		}
 		
 		//gui update
@@ -88,6 +88,7 @@ void draw_blocks(){
 
 
 void tick(tetromino * t, world* w){
-	
-	
+	//TODO fall down (and add tetromino to world if at bottom)
+	//TODO check for rows
+	//TODO create new tetromino
 }
