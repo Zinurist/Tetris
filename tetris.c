@@ -4,8 +4,11 @@ world_data world;
 tetromino current_tetromino;
 
 void init_game(){
+	world.points = 0;
 	for(int x = 0; x < WORLD_WIDTH; x++){
-		
+		for(int y = 0; y < WORLD_HEIGHT; y++){
+			world.field[x][y] = MAKE_INVISIBLE(0);
+		}
 	}
 	fill_tetromino(&current_tetromino,0,0,0);
 }
@@ -36,7 +39,7 @@ void game_loop(int * input_key){
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
 			case 27: 		menu(input_key); break;
-			case -2: 		free(begin);free(end);free(world);return;
+			case -2: 		free(begin);free(end);return;
 			default: break;
 			}
 		}
@@ -89,7 +92,7 @@ void draw_world(){
 	int block;
 	for(int x = 0; x < WORLD_WIDTH; x++){
 		for(int y = 0; y < WORLD_HEIGHT; y++){
-			block = world->field[x][y];
+			block = world.field[x][y];
 			if( VISIBLE(block) ){
 				attrset( C(COLOR(block)) );
 				mvprintw(BOARD_START_Y+1+y, BOARD_START_X+2+x*2, "  ");
