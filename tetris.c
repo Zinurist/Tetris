@@ -6,6 +6,7 @@ unsigned long tick_time;
 
 void init_game(){
 	world.points = 0;
+	world.top_line = WORLD_HEIGHT;
 	for(int x = 0; x < WORLD_WIDTH; x++){
 		for(int y = 0; y < WORLD_HEIGHT; y++){
 			world.field[x][y] = MAKE_INVISIBLE(0);
@@ -126,19 +127,21 @@ void draw_world(){
 }
 
 void draw_block(){
-	//startx/y
-	int sx = current_tetromino.x;
-	int sy = current_tetromino.y;
-	int block;
-	
-	move(sy,sx);
-	
-	for(int x = 0; x < current_tetromino.width; x++ ){
-		for(int y = 0; y < current_tetromino.height; y++ ){
-			block = current_tetromino.field[x][y];
-			if( VISIBLE(block) ){
-				attrset( C(COLOR(block)) );
-				mvprintw(BOARD_START_Y+1+y+sy, BOARD_START_X+2+(x+sx)*2, "  ");
+	if(current_tetromino.visible){
+		//startx/y
+		int sx = current_tetromino.x;
+		int sy = current_tetromino.y;
+		int block;
+		
+		move(sy,sx);
+		
+		for(int x = 0; x < current_tetromino.width; x++ ){
+			for(int y = 0; y < current_tetromino.height; y++ ){
+				block = current_tetromino.field[x][y];
+				if( VISIBLE(block) ){
+					attrset( C(COLOR(block)) );
+					mvprintw(BOARD_START_Y+1+y+sy, BOARD_START_X+2+(x+sx)*2, "  ");
+				}
 			}
 		}
 	}
@@ -146,21 +149,84 @@ void draw_block(){
 
 
 void tick(int * reached_bottom){
+	static int filled_lines[4];
+	static int counter = 0;
 	
 	if(*reached_bottom){
+		//new piece reached the bottom or gravity activated and things need to be rechecked
 		*reached_bottom = 0;
-		write_to_world(&current_tetromino, &world);
 		
-		//TODO check for lines right here
-		
-		fill_tetromino(&current_tetromino,rand()%7);
-		
-		if(check_collision(&current_tetromino, &world)){
-			//GAME OVER
-			init_game();
+		if(counter == 0){//only if call is not coming from gravity stuff
+			write_to_world(&current_tetromino, &world);
 		}
+		
+		counter = 0;
+		//check for lines right here & gravity
+		for(int i = WORLD_HEIGHT-1; i >= world.top_line; i--){
+			if(check_line(i)){
+				fill_line(i);
+				filled_lines[counter] = i;
+				counter++;
+			}
+		}
+		
+		world.points += 100*counter*counter;
+		
+		if(counter == 0){
+			fill_tetromino(&current_tetromino,rand()%7);
+		
+			if(check_collision(&current_tetromino, &world)){
+				//GAME OVER
+				init_game();
+			}
+		}else{
+			current_tetromino.visible = 0;//dont display it while removing lines
+		}
+		
+	}else if(counter != 0){
+		//lines to remove, gravity to activate
+		//remove from top to bottom
+		for(int i = counter-1; i >= 0; i--){
+			remove_line(filled_lines[i]);
+		}
+		
+		*reached_bottom = 1;
 	}else{
+		//just a normal turn, m8
 		*reached_bottom = go_down(&current_tetromino, &world);//in the next tick: block is placed
 	}
 	
+}
+
+int check_line(int line){
+	int block;
+	for(int i = 0; i < WORLD_WIDTH; i++){
+		block = world.field[i][line];
+		
+		if(!VISIBLE(block)){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+void fill_line(int line){
+	for(int i = 0; i < WORLD_WIDTH; i++){
+		world.field[i][line] = MAKE_VISIBLE(E_WHITE);
+	}
+}
+
+void remove_line(int start_line){
+	//bottom to top: copy line above to current one
+	for(int line = start_line; line > world.top_line; line--){
+		for(int i = 0; i < WORLD_WIDTH; i++){
+			world.field[i][line] = world.field[i][line-1];
+		}
+	}
+	
+	for(int i = 0; i < WORLD_WIDTH; i++){
+		world.field[i][world.top_line] = MAKE_INVISIBLE(1);
+	}
+	
+	world.top_line--;
 }

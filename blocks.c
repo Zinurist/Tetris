@@ -58,6 +58,10 @@ void write_to_world(tetromino * t, world_data * w){
 			
 			if( VISIBLE(block_t) ){
 				w->field[x+sx][y+sy] = block_t;
+				
+				if(y+sy < w->top_line){
+					w->top_line = y+sy;
+				}
 			}
 		}
 	}
@@ -65,8 +69,8 @@ void write_to_world(tetromino * t, world_data * w){
 
 
 void fill_tetromino(tetromino * t, int type){
+	t->visible = 1;
 	t->y = 0;
-	
 	const cell (*field)[TETROMINO_HEIGHT];
 	switch(type){
 		case 0:
