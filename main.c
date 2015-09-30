@@ -15,32 +15,17 @@ int main(){
 	use_default_colors();
 	init_colors();
 	
-	int input_key=-1;
-	pthread_t input_thread, loop_thread;
+	int input_key = 27;
+	pthread_t input_thread;
 	
-	if(init_threads(&input_thread, &loop_thread, &input_key)) return -1;
-	
-	pthread_join(loop_thread, NULL);//wait for game to end
-	
-	endwin();
-	return 0;
-}
-
-int init_threads(pthread_t * input_thread, pthread_t * loop_thread, int * input_key){
-	
-	if(pthread_create(input_thread, NULL, input_handler, input_key)){
+	if(pthread_create(&input_thread, NULL, input_handler, &input_key)){
 		fprintf(stderr,"Error when creating input handler thread");
 		return -1;
 	}
 	
-	if(pthread_create(loop_thread, NULL, game_loop, input_key)){
-		fprintf(stderr,"Error when creating game loop thread");
-		pthread_kill(*input_thread, SIGTERM);
-		return -1;
-	}
+	game_loop(&input_key);
 	
-	//TODO menu thread? maybe use main-thread
-	
+	endwin();
 	return 0;
 }
 

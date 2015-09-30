@@ -1,13 +1,18 @@
 #include "tetris.h"
 
+world * w;
+tetromino * current_tetromino;
 
-void *game_loop(void * arg){
-	//game data
-	world * w =malloc(sizeof(world));
-	tetromino * current_tetromino = create_tetromino(0,0,0);
+void init_game(){
+	w =malloc(sizeof(world));
+	current_tetromino = create_tetromino(0,0,0);
+}
+
+void game_loop(int * input_key){
+	//init game data
+	init_game();
 	
 	//control data
-	int * input_key = (int*)arg;
 	struct timeval *begin, *end, *tmp;
 	unsigned long diff;//in us
 	int key=27; //for temporary storage of input_key, b/c of race conditions
@@ -22,17 +27,15 @@ void *game_loop(void * arg){
 	while(1){
 		//input
 		key=*input_key;
-		if(key==-2){
-			break;
-		}else if(key==27){
-			menu();
-		}else if(key!=-1){
+		if(key!=-1){
 			*input_key=-1;//input read->reset
 			switch(key){//TODO move block
 			case KEY_UP: 	;break;//do nothin
 			case KEY_DOWN:	;break;
 			case KEY_LEFT: 	;break;
 			case KEY_RIGHT: ;break;
+			case 27: menu(); break;
+			case -2: return;
 			default: break;
 			}
 		}
@@ -55,8 +58,6 @@ void *game_loop(void * arg){
 		//sleep
 		usleep(50*1000);
 	}
-	
-	pthread_exit(NULL);
 }
 
 void draw(){

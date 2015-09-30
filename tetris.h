@@ -7,7 +7,7 @@
 #include "blocks.h"
 
 
-void *game_loop(void * arg);
+void game_loop(int * input_key);
 void draw();
 void draw_base();
 void draw_blocks();
