@@ -93,6 +93,7 @@ int rotate(tetromino * t, world_data * w, int left){
 		}
 		rotate_tmp.width = t->height;
 		rotate_tmp.height = t->width;
+		//TODO change x/y accordingly
 	}
 	
 	if(check_collision(&rotate_tmp,w) || check_boundaries(&rotate_tmp)){
