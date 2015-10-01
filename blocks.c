@@ -68,7 +68,7 @@ int rotate(tetromino * t, world_data * w, int left){
 		return 1;
 	}
 	
-	if(check_collision(&rotate_tmp,w) && check_boundaries(&rotate_tmp)){
+	if(check_collision(&rotate_tmp,w) || check_boundaries(&rotate_tmp)){
 		return 1;
 	}
 	
@@ -108,8 +108,9 @@ int check_collision(tetromino * t, world_data * w){
 }
 
 int check_boundaries(tetromino * t){
-	
-	
+	if(t->x < 0) return 1;
+	if(t->x+t->width > WORLD_WIDTH) return 1;
+	if(t->y+t->height > WORLD_HEIGHT) return 1;
 	return 0;
 }
 
