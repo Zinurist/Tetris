@@ -64,8 +64,35 @@ int rotate(tetromino * t, world_data * w, int left){
 			
 		}
 	}else{//other pieces
-		//TODO
-		return 1;
+		//123
+		//804
+		//765
+		//to:
+		//781
+		//602
+		//543 (or other way round, depending on left=1/0)
+		rotate_tmp.field[1][1] = t->field[1][1]; //middle unchanged
+		if(left){
+			rotate_tmp.field[0][0] = t->field[2][0];
+			rotate_tmp.field[1][0] = t->field[2][1];
+			rotate_tmp.field[2][0] = t->field[2][2];
+			rotate_tmp.field[2][1] = t->field[1][2];
+			rotate_tmp.field[2][2] = t->field[0][2];
+			rotate_tmp.field[1][2] = t->field[0][1];
+			rotate_tmp.field[0][2] = t->field[0][0];
+			rotate_tmp.field[0][1] = t->field[1][0];
+		}else{
+			rotate_tmp.field[0][0] = t->field[0][2];
+			rotate_tmp.field[1][0] = t->field[0][2];
+			rotate_tmp.field[2][0] = t->field[0][0];
+			rotate_tmp.field[2][1] = t->field[1][0];
+			rotate_tmp.field[2][2] = t->field[2][0];
+			rotate_tmp.field[1][2] = t->field[2][1];
+			rotate_tmp.field[0][2] = t->field[2][2];
+			rotate_tmp.field[0][1] = t->field[1][2];
+		}
+		rotate_tmp.width = t->height;
+		rotate_tmp.height = t->width;
 	}
 	
 	if(check_collision(&rotate_tmp,w) || check_boundaries(&rotate_tmp)){
