@@ -12,7 +12,7 @@ void menu(int * input_key){
 		if(key == -2){
 			break;
 		}else if (key != -1){
-			*input_key=-1;//input read->reset
+			*input_key = -1;//input read->reset
 			switch(key){
 			case KEY_UP: 	selection = (selection+1)%ARRAY_SIZE(options);break;
 			case KEY_DOWN: 	selection = (selection-1)%ARRAY_SIZE(options);break;
@@ -30,6 +30,7 @@ void activate_selection(){
 }
 
 void draw_menu(int selection){
+	clear();
 	attrset(C(WHITE));
 	for(int i=0; i<ARRAY_SIZE(options); i++){
 		move(i,0);
