@@ -3,7 +3,7 @@
 
 int go_down(tetromino * t, world_data * w){
 	t->y++;
-	if(t->y+t->height > WORLD_HEIGHT || check_collision(t,w)){//TODO do not use y, but lowest block in tetromino
+	if(t->y+t->height > WORLD_HEIGHT || check_collision(t,w)){
 		t->y--;
 		return 1;
 	}
@@ -12,7 +12,7 @@ int go_down(tetromino * t, world_data * w){
 
 int go_left(tetromino * t, world_data * w){
 	t->x--;
-	if(t->x < 0 || check_collision(t,w)){//using x is ok, unless tetros arent aligned to the left side!!
+	if(t->x < 0 || check_collision(t,w)){
 		t->x++;
 		return 1;
 	}
@@ -21,11 +21,54 @@ int go_left(tetromino * t, world_data * w){
 
 int go_right(tetromino * t, world_data * w){
 	t->x++;
-	if(t->x+t->width > WORLD_WIDTH || check_collision(t,w)){//TODO do not use x, but most right block in tetromino
+	if(t->x+t->width > WORLD_WIDTH || check_collision(t,w)){
 		t->x--;
 		return 1;
 	}
 	return 0;
+}
+
+tetromino rotate_tmp;
+
+int rotate_left(tetromino * t, world_data * w){
+	rotate_tmp.x = t->x;
+	rotate_tmp.y = t->y;
+	rotate_tmp.visible = 1;
+	
+	//TODO rotate & recalc width/height
+	
+	if(check_collision(&rotate_tmp,w)){
+		return 1;
+	}
+	
+	copy_field(t, &rotate_tmp);
+	return 0;
+}
+
+int rotate_right(tetromino * t, world_data * w){
+	rotate_tmp.x = t->x;
+	rotate_tmp.y = t->y;
+	rotate_tmp.visible = 1;
+	
+	//TODO rotate & recalc width/height
+	
+	if(check_collision(&rotate_tmp,w)){
+		return 1;
+	}
+	
+	copy_field(t, &rotate_tmp);
+	return 0;
+}
+
+
+void copy_field(tetromino * dst, tetromino * src){
+	dst->width = src->width;
+	dst->height = src->height;
+	for(int i = 0; i < TETROMINO_WIDTH; i++){
+		for(int k = 0; k < TETROMINO_HEIGHT; k++){
+			dst->field[i][k] = src->field[i][k];
+		}
+	}
 }
 
 
@@ -123,7 +166,6 @@ void fill_tetromino(tetromino * t, int type){
 		}
 	}
 }
-
 
 
 
