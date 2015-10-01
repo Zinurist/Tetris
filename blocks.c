@@ -83,7 +83,7 @@ int rotate(tetromino * t, world_data * w, int left){
 			rotate_tmp.field[0][1] = t->field[1][0];
 		}else{
 			rotate_tmp.field[0][0] = t->field[0][2];
-			rotate_tmp.field[1][0] = t->field[0][2];
+			rotate_tmp.field[1][0] = t->field[0][1];
 			rotate_tmp.field[2][0] = t->field[0][0];
 			rotate_tmp.field[2][1] = t->field[1][0];
 			rotate_tmp.field[2][2] = t->field[2][0];
@@ -93,7 +93,31 @@ int rotate(tetromino * t, world_data * w, int left){
 		}
 		rotate_tmp.width = t->height;
 		rotate_tmp.height = t->width;
-		//TODO change x/y accordingly
+		//change x/y accordingly
+		//important: double parantheses because of macro!
+		
+		//first row empty
+		if( !VISIBLE((rotate_tmp.field[0][0] | rotate_tmp.field[0][1] | rotate_tmp.field[0][2]))  ){
+			rotate_tmp.x--;
+			//move rows by one to the left (and around)
+			//dont worry about bounds, it's 4*4 after all
+			for(int i = 0; i < 3; i++){
+				rotate_tmp.field[i][0] = rotate_tmp.field[i+1][0];
+				rotate_tmp.field[i][1] = rotate_tmp.field[i+1][1];
+				rotate_tmp.field[i][2] = rotate_tmp.field[i+1][2];
+			}
+		}
+		
+		//first line empty
+		if( !VISIBLE((rotate_tmp.field[0][0] | rotate_tmp.field[1][0] | rotate_tmp.field[2][0]))  ){
+			rotate_tmp.y++;
+			//move lines by one to the top (and around)
+			for(int i = 0; i < 3; i++){
+				rotate_tmp.field[0][i] = rotate_tmp.field[0][i+1];
+				rotate_tmp.field[1][i] = rotate_tmp.field[1][i+1];
+				rotate_tmp.field[2][i] = rotate_tmp.field[2][i+1];
+			}
+		}
 	}
 	
 	if(check_collision(&rotate_tmp,w) || check_boundaries(&rotate_tmp)){
