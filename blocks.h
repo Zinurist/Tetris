@@ -34,17 +34,18 @@ int go_down(tetromino * t, world_data * w);
 int go_left(tetromino * t, world_data * w);
 int go_right(tetromino * t, world_data * w);
 
-int rotate_left(tetromino * t, world_data * w);
-int rotate_right(tetromino * t, world_data * w);
+int rotate(tetromino * t, world_data * w, int left);
 
 int check_collision(tetromino * t, world_data * w);
+int check_boundaries(tetromino * t);
 
 void write_to_world(tetromino * t, world_data * w);
 
 //type range: 0-6 (7 tetrominos)
 void fill_tetromino(tetromino * t, int type);
+void empty_tetromino_field(tetromino * t);
 
-void copy_field(tetromino * dst, tetromino * src);
+void copy_tetromino(tetromino * dst, tetromino * src);
 
 
 //FIELDS for tetrominos

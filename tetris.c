@@ -54,12 +54,12 @@ void game_loop(int * input_key){
 				break;
 			case 'x':
 				if(!reached_bottom){
-					rotate_right(&current_tetromino, &world);
+					rotate(&current_tetromino, &world, 1);
 				}
 				break;
 			case 'c':
 				if(!reached_bottom){
-					rotate_left(&current_tetromino, &world);
+					rotate(&current_tetromino, &world, 0);
 				}
 				break;
 			case 27: /*ESC*/

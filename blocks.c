@@ -30,38 +30,55 @@ int go_right(tetromino * t, world_data * w){
 
 tetromino rotate_tmp;
 
-int rotate_left(tetromino * t, world_data * w){
+int rotate(tetromino * t, world_data * w, int left){
 	rotate_tmp.x = t->x;
 	rotate_tmp.y = t->y;
-	rotate_tmp.visible = 1;
 	
-	//TODO rotate & recalc width/height
-	
-	if(check_collision(&rotate_tmp,w)){
+	int max_size = t->width > t->height ? t->width:t->height;
+	if(max_size == 2) return 0;//square piece
+	else if(max_size == 4){//I piece 
+		//OXXX
+		//OXXX
+		//OXXX
+		//OXXX
+		//to:
+		//XXXX
+		//OOOO
+		//XXXX
+		//XXXX
+		//with x--
+		if(VISIBLE(t->field[0][0])){//I -> _
+			rotate_tmp.x--;//because of bad positioning: IXXX, but should be XIXX, XIXX fucks up go_left though
+			empty_tetromino_field(&rotate_tmp);
+			for(int i = 0; i < TETROMINO_WIDTH; i++){
+				rotate_tmp.field[i][1] = MAKE_VISIBLE(E_CYAN);
+			}
+			rotate_tmp.width = 4;
+			rotate_tmp.height = 2;
+		}else{//_ -> I
+			fill_tetromino(&rotate_tmp, 4);
+			rotate_tmp.x = t->x+1;
+			rotate_tmp.y = t->y;
+			rotate_tmp.width = 1;
+			rotate_tmp.height = 4;
+			
+		}
+	}else{//other pieces
+		//TODO
 		return 1;
 	}
 	
-	copy_field(t, &rotate_tmp);
-	return 0;
-}
-
-int rotate_right(tetromino * t, world_data * w){
-	rotate_tmp.x = t->x;
-	rotate_tmp.y = t->y;
-	rotate_tmp.visible = 1;
-	
-	//TODO rotate & recalc width/height
-	
-	if(check_collision(&rotate_tmp,w)){
+	if(check_collision(&rotate_tmp,w) && check_boundaries(&rotate_tmp)){
 		return 1;
 	}
 	
-	copy_field(t, &rotate_tmp);
+	copy_tetromino(t, &rotate_tmp);
 	return 0;
 }
 
-
-void copy_field(tetromino * dst, tetromino * src){
+void copy_tetromino(tetromino * dst, tetromino * src){
+	dst->x = src->x;
+	dst->y = src->y;
 	dst->width = src->width;
 	dst->height = src->height;
 	for(int i = 0; i < TETROMINO_WIDTH; i++){
@@ -86,6 +103,12 @@ int check_collision(tetromino * t, world_data * w){
 			}
 		}
 	}
+	
+	return 0;
+}
+
+int check_boundaries(tetromino * t){
+	
 	
 	return 0;
 }
@@ -167,6 +190,13 @@ void fill_tetromino(tetromino * t, int type){
 	}
 }
 
+void empty_tetromino_field(tetromino * t){
+	for(int i = 0; i < TETROMINO_WIDTH; i++){
+		for(int k = 0; k < TETROMINO_HEIGHT; k++){
+			t->field[i][k] = MAKE_INVISIBLE(1);
+		}
+	}
+}
 
 
 
