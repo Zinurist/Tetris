@@ -16,8 +16,8 @@ void menu(int * input_key){
 		}else if (key != -1){
 			*input_key = -1;//input read->reset
 			switch(key){
-			case KEY_UP: 	selection = (selection-1)%ARRAY_SIZE(options);break;
-			case KEY_DOWN: 	selection = (selection+1)%ARRAY_SIZE(options);break;
+			case KEY_UP: 	selection = (selection-1)%(ARRAY_SIZE(options));break;
+			case KEY_DOWN: 	selection = (selection+1)%(ARRAY_SIZE(options));break;
 			case KEY_ENTER:	activate_selection(selection);break;
 			case 27: return;/*ESC*/
 			default: break;
@@ -52,4 +52,5 @@ void draw_menu(int selection){
 			printw(options[i]);
 		}
 	}
+	refresh();
 }
