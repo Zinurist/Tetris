@@ -19,11 +19,14 @@ void menu(int * input_key){
 			case KEY_UP: 	selection = (selection-1)%ARRAY_SIZE(options);break;
 			case KEY_DOWN: 	selection = (selection+1)%ARRAY_SIZE(options);break;
 			case KEY_ENTER:	activate_selection(selection);break;
+			case 27: return;/*ESC*/
 			default: break;
 			}
 
 			draw_menu(selection);
 		}
+
+		usleep(50*1000);
 	}
 }
 
