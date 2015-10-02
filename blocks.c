@@ -33,6 +33,7 @@ tetromino rotate_tmp;
 int rotate(tetromino * t, world_data * w, int left){
 	rotate_tmp.x = t->x;
 	rotate_tmp.y = t->y;
+	empty_tetromino_field(&rotate_tmp);
 	
 	int max_size = t->width > t->height ? t->width:t->height;
 	if(max_size == 2) return 0;//square piece
@@ -49,7 +50,6 @@ int rotate(tetromino * t, world_data * w, int left){
 		//with x--
 		if(VISIBLE(t->field[0][0])){//I -> _
 			rotate_tmp.x--;//because of bad positioning: IXXX, but should be XIXX, XIXX fucks up go_left though
-			empty_tetromino_field(&rotate_tmp);
 			for(int i = 0; i < TETROMINO_WIDTH; i++){
 				rotate_tmp.field[i][1] = MAKE_VISIBLE(E_CYAN);
 			}
