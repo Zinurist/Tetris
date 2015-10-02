@@ -1,8 +1,10 @@
 #include "menu.h"
 
-char* options[] = {
+char* optionlist[] = {
 	"Play", "New Game", "Settings", "Exit", "spooky dont click"
 };
+
+int options = ARRAY_SIZE(optionlist);
 
 void menu(int * input_key){
 	int selection = 0;
@@ -16,17 +18,23 @@ void menu(int * input_key){
 		}else if (key != -1){
 			*input_key = -1;//input read->reset
 			switch(key){
-			case KEY_UP: 	selection = (selection-1)%(ARRAY_SIZE(options));break;
-			case KEY_DOWN: 	selection = (selection+1)%(ARRAY_SIZE(options));break;
-			case KEY_ENTER:	activate_selection(selection);break;
-			case 27: return;/*ESC*/
-			default: break;
+			case KEY_UP:
+				//shitty workaround for actual modulo operation in C
+				selection = (((selection - 1) % options) + options) % options;break;
+			case KEY_DOWN:
+				selection = (((selection + 1) % options) + options) % options;break;
+			case KEY_ENTER:
+				activate_selection(selection);break;
+			case 27:/*ESC*/
+				return;
+			default:
+				break;
 			}
 
 			draw_menu(selection);
 		}
 
-		usleep(50*1000);
+		usleep(50 * 1000);
 	}
 }
 
@@ -42,14 +50,14 @@ void activate_selection(int selection){
 
 void draw_menu(int selection){
 	attrset(C(WHITE));
-	for(int i=0; i<ARRAY_SIZE(options); i++){
+	for(int i = 0; i < options; i++){
 		move(i,0);
 		if(selection == i){
 			attrset(C(YELLOW));
-			printw(options[i]);
+			printw(optionlist[i]);
 			attrset(C(WHITE));
 		}else{
-			printw(options[i]);
+			printw(optionlist[i]);
 		}
 	}
 	refresh();
