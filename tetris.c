@@ -64,6 +64,7 @@ void game_loop(int * input_key){
 				break;
 			case 27: /*ESC*/
 				menu(input_key); 
+				gettimeofday(begin, NULL);
 				break;
 			case 32: /*Space*/
 				while(!go_down(&current_tetromino, &world));
