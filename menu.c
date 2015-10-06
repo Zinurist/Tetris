@@ -1,7 +1,7 @@
 #include "menu.h"
 
 char* optionlist[] = {
-	"Play", "New Game", "Settings coming soon", "Exit", "spooky dont click"
+	"Play", "New Game", "Exit", "spooky dont click"
 };
 
 int options = ARRAY_SIZE(optionlist);
@@ -27,9 +27,8 @@ int menu(int * input_key){
 				switch(selection){
 					case 0:return 0;//Play
 					case 1:return 1;//New Game
-					case 2:break;//Settings
-					case 3:return -1;//Exit
-					case 4:time_to_dance(5);clear();break;//spooky dont click
+					case 2:return -1;//Exit
+					case 3:time_to_dance(5);clear();break;//spooky dont click
 				}
 				break;
 			case 27:/*ESC*/
