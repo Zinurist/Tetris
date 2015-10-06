@@ -1,12 +1,12 @@
 #include "menu.h"
 
 char* optionlist[] = {
-	"Play", "New Game", "Settings", "Exit", "spooky dont click"
+	"Play", "New Game", "Settings coming soon", "Exit", "spooky dont click"
 };
 
 int options = ARRAY_SIZE(optionlist);
 
-void menu(int * input_key){
+int menu(int * input_key){
 	int selection = 0;
 	int key = 0;
 	clear();
@@ -23,10 +23,17 @@ void menu(int * input_key){
 				selection = (((selection - 1) % options) + options) % options;break;
 			case KEY_DOWN:
 				selection = (((selection + 1) % options) + options) % options;break;
-			case KEY_ENTER:
-				activate_selection(selection);break;
+			case '\n':
+				switch(selection){
+					case 0:return 0;//Play
+					case 1:return 1;//New Game
+					case 2:break;//Settings
+					case 3:return -1;//Exit
+					case 4:time_to_dance(5);clear();break;//spooky dont click
+				}
+				break;
 			case 27:/*ESC*/
-				return;
+				return 0;
 			default:
 				break;
 			}
@@ -36,16 +43,7 @@ void menu(int * input_key){
 
 		usleep(50 * 1000);
 	}
-}
-
-void activate_selection(int selection){
-	switch(selection){
-		case 0:break;//Play
-		case 1:break;//New Game
-		case 2:break;//Settings
-		case 3:break;//Exit
-		case 4:break;//spooky dont click
-	}
+	return 0;
 }
 
 void draw_menu(int selection){

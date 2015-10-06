@@ -2,12 +2,12 @@
 
 #include <ncurses.h>
 #include "colors.h"
+#include "spooky.h"
 #include <unistd.h>
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
-void menu(int * input_key);
-void activate_selection(int selection);
+int menu(int * input_key);
 void draw_menu(int selection);
 
-//extern char* options[]; 
+//extern char* options[];

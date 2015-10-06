@@ -39,43 +39,51 @@ void game_loop(int * input_key){
 		if(key != -1){
 			*input_key = -1;//input read->reset
 			switch(key){//TODO move block
-			case KEY_DOWN:	
-				reached_bottom = go_down(&current_tetromino, &world);
-				break;
-			case KEY_LEFT: 	
-				if(!reached_bottom){
-					go_left(&current_tetromino, &world);
-				}
-				break;
-			case KEY_RIGHT: 
-				if(!reached_bottom){
-					go_right(&current_tetromino, &world);
-				}
-				break;
-			case 'x':
-				if(!reached_bottom){
-					rotate(&current_tetromino, &world, 1);
-				}
-				break;
-			case 'c':
-				if(!reached_bottom){
-					rotate(&current_tetromino, &world, 0);
-				}
-				break;
-			case 27: /*ESC*/
-				menu(input_key); 
-				gettimeofday(begin, NULL);
-				break;
-			case 32: /*Space*/
-				while(!go_down(&current_tetromino, &world));
-				reached_bottom=1;
-				diff=tick_time;
-				break;
-			case -2: 		
-				free(begin);
-				free(end);
-				return;
-			default: break;
+				case KEY_DOWN:	
+					reached_bottom = go_down(&current_tetromino, &world);
+					break;
+				case KEY_LEFT: 	
+					if(!reached_bottom){
+						go_left(&current_tetromino, &world);
+					}
+					break;
+				case KEY_RIGHT: 
+					if(!reached_bottom){
+						go_right(&current_tetromino, &world);
+					}
+					break;
+				case 'x':
+					if(!reached_bottom){
+						rotate(&current_tetromino, &world, 1);
+					}
+					break;
+				case 'c':
+					if(!reached_bottom){
+						rotate(&current_tetromino, &world, 0);
+					}
+					break;
+				case 27: /*ESC*/
+					switch(menu(input_key)){
+						case 0:break;//continue game
+						case 1:init_game();break;//new game
+						case -1://quit
+							free(begin);
+							free(end);
+							return;
+						default:break;
+					} 
+					gettimeofday(begin, NULL);
+					break;
+				case 32: /*Space*/
+					while(!go_down(&current_tetromino, &world));
+					reached_bottom=1;
+					diff=tick_time;
+					break;
+				case -2: 		
+					free(begin);
+					free(end);
+					return;
+				default: break;
 			}
 		}
 		
