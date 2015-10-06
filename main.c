@@ -10,6 +10,7 @@ int main(){
 	noecho();
 	curs_set(0);
 	keypad(stdscr,1);
+	ESCDELAY = 25;
 	
 	//color error messages & exit, TODO no-color mode?
 	if(!has_colors()){endwin();printf("no colors, exiting...\n");return -1;}
