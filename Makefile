@@ -8,7 +8,7 @@ EXECUTABLE=tetris
 
 all: $(SOURCES) $(EXECUTABLE)
 
-debug: CFLAGS += -g
+debug: CFLAGS += -ggdb
 debug: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)

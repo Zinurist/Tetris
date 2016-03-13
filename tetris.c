@@ -248,7 +248,7 @@ void remove_line(int start_line){
 		world.field[i][world.top_line] = MAKE_INVISIBLE(1);
 	}
 	
-	world.top_line--;
+	world.top_line++;
 	world.lines_removed++;
 }
 
