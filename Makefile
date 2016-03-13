@@ -3,14 +3,16 @@ CFLAGS= -c -Wall -std=gnu99
 LDLIBS= -lncurses -lpthread
 SOURCES=main.c tetris.c input.c menu.c blocks.c spooky.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=Tetris
+EXECUTABLE=tetris
 
 
 all: $(SOURCES) $(EXECUTABLE)
 
+debug: CFLAGS += -g
+debug: $(SOURCES) $(EXECUTABLE)
+
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(EXECUTABLE) $(LDLIBS)
-
 
 #$@ = name of target, $< = name of prerequisite
 %.o: %.c
