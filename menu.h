@@ -2,7 +2,6 @@
 
 #include <ncurses.h>
 #include "colors.h"
-#include "spooky.h"
 #include <unistd.h>
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))

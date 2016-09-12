@@ -8,7 +8,6 @@
 #include <pthread.h>
 #include "blocks.h"
 #include "menu.h"
-#include "spooky.h"
 #include <stdlib.h>
 
 #define BOARD_START_X 4
